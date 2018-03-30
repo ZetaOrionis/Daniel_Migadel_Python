@@ -32,10 +32,13 @@ def home() :
 @route('/test')
 def home() :
     ville = request.query.ville2
-    reponseInstallation = modele.rechercheInstallation(ville)
+    reponseInstallation = list(modele.rechercheInstallation(ville))
+
+    lat = -33.718234;
+    lng = 150.363181;
     if len(reponseInstallation) == 0:
         return {"Excusez nous, nous n'avons pas trouvé de réponse à votre requète."}
 
-    return template('reponseInstallation', reponseInstallation=reponseInstallation)
+    return template('reponseInstallation', reponseInstallation=reponseInstallation, lat=lat, lng=lng)
 
 run(host='localhost', port=8000,debug=False, reloader=True)

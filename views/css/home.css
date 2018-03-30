@@ -1,0 +1,7 @@
+p, input {
+  text-align: center;
+}
+
+input[type=submit] {
+  margin-left: 15vw;
+}

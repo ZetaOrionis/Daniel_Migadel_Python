@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Home</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link rel="stylesheet" href="../views/css/jquery-ui.css" >
+    <link rel="stylesheet" href="../views/css/home.css" >
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ url('views', path='script/codeVilleComplete.js') }}" charset="utf-8"></script>
   </head>
@@ -35,6 +37,5 @@
         </form>
       </div>
     </div>
-
   </body>
 </html>

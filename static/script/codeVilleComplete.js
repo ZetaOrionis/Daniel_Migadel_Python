@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+
   $('#ville').autocomplete({ //$(this) = autocomplete
     source :
       function(request, response) {
@@ -22,5 +22,6 @@ $(document).ready(function(){
       },
       minLength:2
   });
+
 
 });
