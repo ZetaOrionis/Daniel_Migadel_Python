@@ -1,13 +1,17 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 from databases import *
+from dbEquip import *
+#from parseData import *
 import math
 
 print("Allo le monde\n")
 #url = "http://data.paysdelaloire.fr/donnees/detail/equipements-sportifs-espaces-et-sites-de-pratiques-en-pays-de-la-loire-fiches-installations"
 #url = str(input())
 
-data = json.load(open('res/data.fiche.installation.paysdelaloire.fr.json'))
+data = json.load(open('../res/install.data.paysdelaloire.fr.json'))
+data_1 = json.load(open('../res/equip.data.paysdelaloire.fr.json'))
+data_2 = json.load(open('../res/equi_activites_tabledata.paysdelaloire.fr.json'))
 #pprint(data)
 
 connection, cursor = createConnection()
@@ -20,10 +24,17 @@ connection, cursor = createConnection()
 #    PRIMARY KEY(id)
 #);
 #""")
-newDatabaseCoord(cursor)
+
+#data
 newDatabaseInstallation(cursor)
+newDatabaseCoord(cursor)
 
+#data_1
+newDatabaseEquipementType(cursor)
+newDatabaseEquipement(cursor)
 
+#data_2
+newDatabaseActivites(cursor)
 
 for i in data["data"]:
     coordonnees = [i["Latitude"],i["Longitude"]]
@@ -36,7 +47,20 @@ for i in data["data"]:
     print(row[0])
     installation = [i["InsNumeroInstall"],row[0],i["geo"]["name"],
     i["InsNoVoie"],i["InsLibelleVoie"],i["InsCodePostal"],i["ComLib"]]
-    cursor.execute("""INSERT INTO test(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
+    cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
+
+for a in data_1["data"]:
+    equipementType = [a["EquipementTypeCode"],a["EquipementTypeLib"]]
+    equipement = [a["EquipementId"],a["EquNom"],a["EquipementTypeCode"],a["InsNumeroInstall"]]
+    print(str(equipementType))
+    insertEquipementType(cursor,equipementType)
+    print(str(equipement))
+    insertEquipement(cursor,equipement)
+
+for b in data_2["data"]:
+    activite = [b["ActCode"],b["ActLib"],b["EquipementId"]]
+    print(str(activite))
+    insertActivite(cursor,activite)
 
 # latitude = math.radians(47.075698)
 # longitude = math.radians(-1.400693)

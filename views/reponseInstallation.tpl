@@ -9,22 +9,12 @@
   <body>
     <table id="table">
       <tr>
-        <th>Nom</th>
-        <th>Ville</th>
-        <th>Code Postal</th>
-        <th>Installation ID</th>
-        <th>Coordonnée ID</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
       </tr>
-      % (lat) = lat
-      % (lng) = lng
-      % for rep in reponseInstallation:
-        % (installationId, coordId, name, noVoie, libelleVoie, cp, commune) = rep
+      % for rep in reponse:
+        % (lat, lng) = rep
         <tr>
-          <td> {{name}} </td>
-          <td> {{commune}} </td>
-          <td> {{cp}} </td>
-          <td> {{installationId}} </td>
-          <td> {{coordId}} </td>
           <td id="lat"> {{lat}} </td>
           <td id="lng"> {{lng}} </td>
         </tr>
@@ -37,9 +27,6 @@
       var lati = document.getElementById('lat');
       var lngi = document.getElementById('lng');
       var arrayLignes = document.getElementById("table").rows;
-
-      var lati2 = -31.563910;
-      var lngi2 = 147.154312;
 
       function initMap() {
 
@@ -69,11 +56,7 @@
 
       var locations = [];
       for (var i = 0; i < arrayLignes.length; i++) {
-        if (i%2 == 0) {
           locations.push({lat: parseFloat(lati.innerText), lng: parseFloat(lngi.innerText)});
-        } else {
-          locations.push({lat: lati2, lng: lngi2});
-        }
       }
 
     </script>

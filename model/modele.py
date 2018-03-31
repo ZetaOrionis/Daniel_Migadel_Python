@@ -1,21 +1,21 @@
 import mysql.connector
 
 """ Selection d'une installation précise dans une ville donnée """
+""" Connection à la base de données """
+"""query ="SELECT latitude,longitude FROM coordonnes c, installation i where c.CoordID = i.CoordID and i.commune = \""+ville+"\"";
+"""
+""" Afficher sous forme de tableau """
+"""query = ("SELECT * from installation where commune LIKE \""+ville+"\"")"""
 def rechercheInstallation(ville) :
 
-    """ Connection à la base de données """
-
-    conn = mysql.connector.connect(host="infoweb",user="E165106N",password="E165106N",database="E165106N")
+    conn = mysql.connector.connect(host='localhost',user='root',password='',database='installations_sportives')
     cursor = conn.cursor()
 
-    query = ("SELECT * FROM test where commune LIKE \""+ ville +"\" ")
+    cursor.execute("""SELECT * from installation where commune = %s""",ville)
 
-    cursor.execute(query)
-
-    """ Afficher sous forme de tableau """
-    row = cursor.fetchall()
-    return row
-
+    rows = cursor.fetchall()
+    return rows
+    
     cursor.close()
     conn.close()
 
@@ -24,7 +24,7 @@ def recherche(activite,ville) :
 
     """ Connection à la base de données """
 
-    conn = mysql.connector.connect(host="infoweb",user="E165106N",password="E165106N",database="E165106N")
+    conn = mysql.connector.connect(host="localhost",user="root",password="",database="installations_sportives")
     cursor = conn.cursor()
 
     query = ("SELECT * FROM PaysdelaLoire where activite LIKE \""+ activite +"\" and ville LIKE \""+ ville +"\" ")
