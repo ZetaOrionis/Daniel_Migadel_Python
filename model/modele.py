@@ -11,11 +11,12 @@ def rechercheInstallation(ville) :
     conn = mysql.connector.connect(host='localhost',user='root',password='',database='installations_sportives')
     cursor = conn.cursor()
 
-    cursor.execute("""SELECT * from installation where commune = %s""",ville)
+    query = ("SELECT activiteLib, equNom, equipTypeLib, name, noVoie, libelleVoie, commune, latitude, longitude FROM installation i, activite a, equipement e, coordonnes c, equipementtype et where c.coordID = i.coordID and i.commune = \'"+ville+"\' and a.equipID = e.equipID and e.equipTypecode = et.equipTypeCode")
+    cursor.execute(query)
 
     rows = cursor.fetchall()
     return rows
-    
+
     cursor.close()
     conn.close()
 
@@ -27,7 +28,7 @@ def recherche(activite,ville) :
     conn = mysql.connector.connect(host="localhost",user="root",password="",database="installations_sportives")
     cursor = conn.cursor()
 
-    query = ("SELECT * FROM PaysdelaLoire where activite LIKE \""+ activite +"\" and ville LIKE \""+ ville +"\" ")
+    query = ("SELECT activiteLib, equNom, equipTypeLib, name, noVoie, libelleVoie, commune, latitude, longitude FROM installation i, activite a, equipement e, coordonnes c, equipementtype et where c.coordID = i.coordID and i.commune = \'"+ville+"\' and a.equipID = e.equipID and activiteLib = \'"+activite+"\' and e.equipTypecode = et.equipTypeCode")
 
     cursor.execute(query)
 
