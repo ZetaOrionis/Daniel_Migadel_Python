@@ -12,6 +12,14 @@ p, input {
   text-align: center;
 }
 
+#activite {
+	width: 150px;
+}
+
+#activite option{
+	width: 150px;
+}
+
 img {
 	display: none;
 	margin-left: 10%;

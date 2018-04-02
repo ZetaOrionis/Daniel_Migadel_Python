@@ -39,3 +39,23 @@ def recherche(activite,ville) :
 
     cursor.close()
     conn.close()
+
+""" Retourne toutes les activitées """
+def rechercheActivites() :
+
+    """ Connection à la base de données """
+
+    conn = mysql.connector.connect(host="localhost",user="root",password="",database="installations_sportives")
+    cursor = conn.cursor()
+
+    query = ("SELECT * FROM activite")
+
+    cursor.execute(query)
+
+    """ Afficher sous forme de tableau """
+    row = cursor.fetchall()
+    return row
+
+
+    cursor.close()
+    conn.close()

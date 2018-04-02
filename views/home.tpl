@@ -23,8 +23,13 @@
           <p>Ville :
             <input id="ville1" type="text" name="ville1">
           </p>
-          <p>Activité :
-            <input id="activite" type="text" name="activite">
+          <p>Activité : 
+            <select name="activite" id="activite">
+              % for activite in activites :
+                % (actID,actLib,equipIP) = activite
+                <option value="{{actLib}}">{{actLib}}</option>
+              %end
+            </select>
           </p>
           <input id="Rechercher" type="submit" value="Rechercher">
         </form>

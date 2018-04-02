@@ -10,9 +10,10 @@ def error500(error):
     return {"Excusez nous, une erreur 500 vient d'apparaître" : 500}
 
 @route('/')
-@view('home')
 def home():
-    return { 'url': url }
+    activites = list(modele.rechercheActivites())
+    return template('home',activites=activites, url=url )
+   
 
 @route('/views/:path#.+#', name='views')
 def static(path):
