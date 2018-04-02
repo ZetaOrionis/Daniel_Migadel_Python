@@ -1,9 +1,31 @@
-table {
+#table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
+    width: 100%;
 }
 
-table, th, td {
-    border: 1px solid black;
+#table td, #table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#table tr:nth-child(even){background-color: #f2f2f2;}
+
+#table tr:hover {background-color: #FADAC2;}
+
+#table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+h2 {
+  text-align: center;
+}
+#lenreponse {
+  color: #4CAF50;
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -19,6 +41,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #A7D2A3;
 }
 
 #lat, #lng {

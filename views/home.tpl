@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <title>Home</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -12,6 +11,8 @@
     <script type="text/javascript" src="{{ url('views', path='script/codeVilleComplete.js') }}" charset="utf-8"></script>
   </head>
   <body>
+    
+    <img src="{{ url('views', path='img/wallpaper.png') }}" width="500" height="auto" />
     <div id="tabs">
       <ul>
         <li><a href="#tabs-1">Recheche Activité - 1</a></li>
@@ -25,7 +26,7 @@
           <p>Activité :
             <input id="activite" type="text" name="activite">
           </p>
-          <input type="submit" value="Rechercher">
+          <input id="Rechercher" type="submit" value="Rechercher">
         </form>
       </div>
       <div id="tabs-2">

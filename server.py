@@ -25,7 +25,7 @@ def home() :
 
     reponse = list(modele.recherche(activite,ville))
     if len(reponse) == 0:
-        return {"Excusez nous, nous n'avons pas trouvé de réponse à votre requète."}
+        return template('error')
 
     return template('reponse', reponse=reponse)
 
@@ -34,14 +34,12 @@ def home() :
     ville = request.query.ville2
     
     reponse = list(modele.rechercheInstallation(ville))
-    for rep in reponse:
-        print(rep)
 
     if len(reponse) == 0:
-        return {"Excusez nous, nous n'avons pas trouvé de réponse à votre requète."}
+        return template('error')
 
-    print(len(reponse))
+    lenreponse = len(reponse)
 
-    return template('reponse', reponse=reponse)
+    return template('reponse', reponse=reponse, lenreponse=lenreponse)
 
-run(host='localhost', port=8000,debug=False, reloader=True)
+run(host='localhost', port=8000, debug=False, reloader=True)

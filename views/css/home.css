@@ -1,7 +1,23 @@
+html {
+	background-color: #A7D2A3;
+	/*
+	background: url('../img/wallpaper.png') no-repeat center -350px fixed; 
+ 	-webkit-background-size: cover;
+ 	-moz-background-size: cover;
+ 	-o-background-size: cover;
+ 	background-size: cover;
+ 	*/
+
 p, input {
   text-align: center;
 }
 
+img {
+	display: none;
+	margin-left: 10%;
+	margin-top: 10%;
+}
+
 input[type=submit] {
-  margin-left: 15vw;
+  background-color: #9F681D;
 }

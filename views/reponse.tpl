@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../views/css/reponse.css"/>
   </head>
   <body>
+    % (lenreponse) = lenreponse
+    <h2>Nous avons trouvé <span id="lenreponse"> {{lenreponse}} </span> résultats !</h2>
     <table id="table">
       <tr>
         <th>Activité</th>
@@ -32,7 +34,9 @@
     </table>
 
     <div id="map"></div>
-    <script>
+
+    
+    <script> 
 
       var lati = document.getElementById('lat');
       var lngi = document.getElementById('lng');
@@ -65,7 +69,7 @@
       }
 
       var locations = [];
-      for (var i = 0; i < arrayLignes.length; i++) {
+      for (var i = 0; i < arrayLignes.length-1; i++) {
           locations.push({lat: parseFloat(lati.innerText), lng: parseFloat(lngi.innerText)});
       }
 
