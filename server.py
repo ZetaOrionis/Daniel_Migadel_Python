@@ -27,7 +27,9 @@ def home() :
     if len(reponse) == 0:
         return template('error')
 
-    return template('reponse', reponse=reponse)
+    lenreponse = len(reponse)
+
+    return template('reponse', reponse=reponse, lenreponse=lenreponse)
 
 @route('/test')
 def home() :
