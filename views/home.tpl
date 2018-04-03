@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link rel="stylesheet" href="../views/css/jquery-ui.css" >
+    <link rel="stylesheet" href=";./views/css/reset.css" >
     <link rel="stylesheet" href="../views/css/home.css" >
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ url('views', path='script/codeVilleComplete.js') }}" charset="utf-8"></script>
@@ -24,18 +25,13 @@
             <input id="ville1" type="text" name="ville1">
           </p>
           <p>Activité : 
-            <select name="activite" id="activite">
-              % for activite in activites :
-                % (actID,actLib,equipIP) = activite
-                <option value="{{actLib}}">{{actLib}}</option>
-              %end
-            </select>
+            <input id="activite" type="text" name="activite">
           </p>
           <input id="Rechercher" type="submit" value="Rechercher">
         </form>
       </div>
       <div id="tabs-2">
-        <form method="get" action="/test">
+        <form method="post" action="/test">
           <p>Ville :
             <input id="ville2" type="text" name="ville2">
           </p>

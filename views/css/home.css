@@ -13,6 +13,7 @@ p, input {
 }
 
 #activite {
+	overflow: hidden;
 	width: 150px;
 }
 

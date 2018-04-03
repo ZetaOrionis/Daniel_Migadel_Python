@@ -4,17 +4,17 @@ $(document).ready(function(){
     source :
       function(request, response) {
         $.ajax({
-          url : 'http://infoweb-ens/~jacquin-c/codePostal/codePostalComplete.php',
+          url : '/autocompletionville',
           dataType : 'json',
           type : "GET",
           data: {
             commune : $('#ville1').val()
           }
         }).done(function(data) {
-          var transData = data.map(function(item){
+          var transData = data.map(function(value){
             return {
-              label : item.Ville+"-"+item.CodePostal,
-              value : item.Ville
+              label : value,
+              value : value
             };
           })
           return response(transData);
@@ -22,7 +22,33 @@ $(document).ready(function(){
       },
       minLength:2,
       select: function(event,ui) {
-        $("#ville1").val(ui.item.Ville);
+        $("#ville1").val(ui.value);
+      }
+  });
+
+  $('#activite').autocomplete({ //$(this) = autocomplete
+    source :
+      function(request, response) {
+        $.ajax({
+          url : '/autocompletionactivite',
+          dataType : 'json',
+          type : "GET",
+          data: {
+            activite : $('#activite').val()
+          }
+        }).done(function(data) {
+          var transData = data.map(function(value){
+            return {
+              label : value,
+              value : value
+            };
+          })
+          return response(transData);
+        });
+      },
+      minLength:2,
+      select: function(event,ui) {
+        $("#activite").val(ui.value);
       }
   });
 
@@ -34,17 +60,17 @@ $(document).ready(function(){
     source :
       function(request, response) {
         $.ajax({
-          url : 'http://infoweb-ens/~jacquin-c/codePostal/codePostalComplete.php',
+          url : '/autocompletionville',
           dataType : 'json',
           type : "GET",
           data: {
             commune : $('#ville2').val()
           }
         }).done(function(data) {
-          var transData = data.map(function(item){
+          var transData = data.map(function(value){
             return {
-              label : item.Ville+"-"+item.CodePostal,
-              value : item.Ville
+              label : value,
+              value : value
             };
           })
           return response(transData);
@@ -52,7 +78,7 @@ $(document).ready(function(){
       },
       minLength:2,
       select: function(event,ui) {
-        $("#ville2").val(ui.item.Ville);
+        $("#ville2").val(ui.value);
       }
   });
 
