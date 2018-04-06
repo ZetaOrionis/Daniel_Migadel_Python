@@ -59,6 +59,7 @@ function initialisationMap() {
   var lati = document.getElementById('lat');
   var lngi = document.getElementById('lng');
 
+<<<<<<< HEAD
 
 
   var coordonnees = document.querySelectorAll('[data-latitude],[data-longitude]');
@@ -90,6 +91,9 @@ function initialisationMap() {
   var arraylist = document.getElementById('table').rows;
 
   console.log(coordonnees);
+=======
+  var arraylignes = document.getElementById('table').rows;
+>>>>>>> da4e314761675534b46e686a92cf55e53d55f2d6
 
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
@@ -97,7 +101,11 @@ function initialisationMap() {
   });
 
   var locations = [];
+<<<<<<< HEAD
   for (var i = 0; i < arraylist.length-1; i++) {
+=======
+  for (var i = 0; i < arraylignes.length-1; i++) {
+>>>>>>> da4e314761675534b46e686a92cf55e53d55f2d6
       locations.push({lat: parseFloat(lati.innerText), lng: parseFloat(lngi.innerText)});
   }
 

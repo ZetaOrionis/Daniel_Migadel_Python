@@ -165,6 +165,55 @@ print(["Longitude"])
 #     print(str(activite))
 #     insertActivite(cursor,activite)
 
+deleteActiviteVide(cursor)
+# reader = csv.DictReader(f)
+# data = [row for row in reader]
+#
+# for row in data :
+#
+# writer = csv.writer(open("../res/activites.csv", "wb"), quoting=csv.QUOTE_NONE)
+# reader = csv.reader(open("../res/activites1.csv", "rb"), skipinitialspace=True)
+# writer.writerows(reader)
+
+
+
+
+
+print(["Latitude"])
+print(["Longitude"])
+
+
+# for i in data :
+#     coordonnees = [i["Latitude"],i["Longitude"]]
+#     print(i["Latitude"])
+#     print(i["Longitude"])
+#
+#
+#     #cursor.execute("""INSERT INTO Coordonnes(latitude,longitude) VALUES(%s,%s)""",coordonnees)
+#     insertIgnoreCoord(cursor,coordonnees)
+#     cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnees)
+#     id = cursor.lastrowid
+#     row = cursor.fetchone()
+#     # print(row[0])
+#
+#     installation = [i["Numéro de l'installation"],row[0],i["Nom usuel de l'installation"],
+#     i["Numero de la voie"],i["Nom de la voie"],i["Code postal"],i["Nom de la commune"]]
+#     cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
+
+# for a in data_1:
+#     equipementType = [a[EquipementTypeCode],a["EquipementTypeLib"]]
+#     equipement = [a["EquipementId"],a["EquNom"],a["EquGpsX"],a["EquGpsY"],a["EquipementTypeCode"],a["InsNumeroInstall"]]
+#
+#     # print(str(equipementType))
+#     insertEquipementType(cursor,equipementType)
+#     # print(str(equipement))
+#     insertEquipement(cursor,equipement)
+#
+# for b in data_2["data"]:
+#     activite = [b["ActCode"],b["ActLib"],b["EquipementId"]]
+#     print(str(activite))
+#     insertActivite(cursor,activite)
+
 # latitude = math.radians(47.075698)
 # longitude = math.radians(-1.400693)
 # lat = math.radians(46.333078)
