@@ -59,41 +59,13 @@ function initialisationMap() {
   var lati = document.getElementById('lat');
   var lngi = document.getElementById('lng');
 
-<<<<<<< HEAD
 
-
-  var coordonnees = document.querySelectorAll('[data-latitude],[data-longitude]');
-  console.log(coordonnees);
-  console.log(coordonnees.item(0));
-  console.log(coordonnees.item(1));
-  for (i = 0; i < 10; ++i) {
-    console.log(coordonnees[i]);
-    if(i == 0) {
-      var lat = coordonnees[i].innerHTML;
-      console.log("lat0"+lat);
-    } else {
-      if(i%2 != 0) {
-        var lat = coordonnees[i].innerHTML;
-        console.log("lat"+lat);
-
-      } else {
-        var lng = coordonnees[i].innerHTML;
-        console.log("lng"+lng);
-        console.log(lat+" - "+lng);
-      }
-    }
-
-    console.log(coordonnees[i].innerHTML);
-  }
 
 
 
   var arraylist = document.getElementById('table').rows;
 
-  console.log(coordonnees);
-=======
-  var arraylignes = document.getElementById('table').rows;
->>>>>>> da4e314761675534b46e686a92cf55e53d55f2d6
+
 
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
@@ -101,11 +73,7 @@ function initialisationMap() {
   });
 
   var locations = [];
-<<<<<<< HEAD
   for (var i = 0; i < arraylist.length-1; i++) {
-=======
-  for (var i = 0; i < arraylignes.length-1; i++) {
->>>>>>> da4e314761675534b46e686a92cf55e53d55f2d6
       locations.push({lat: parseFloat(lati.innerText), lng: parseFloat(lngi.innerText)});
   }
 

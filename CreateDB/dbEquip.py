@@ -95,13 +95,8 @@ def selectLocationDistance(cursor,distance,latitude,longitude) :
     latitude = str(latitude)
     longitude = str(longitude)
     distance = str(distance)
-<<<<<<< HEAD
-    formule="(6366*acos(cos(radians("+latitude+"))*cos(radians(`latitude`))*cos(radians(`longitude`)-radians("+longitude+"))+sin(radians("+latitude+"))*sin(radians(`latitude`))))"
-    sql="SELECT coordId,"+formule+"AS dist FROM Coordonnes WHERE"+formule+"<="+distance+" ORDER by dist ASC";
-=======
     formule="(6366*acos(cos(radians("+latitude+"))*cos(radians(`e.equGpsY`))*cos(radians(`equGpsX`)-radians("+longitude+"))+sin(radians("+latitude+"))*sin(radians(`e.equGpsY`))))"
     sql="SELECT e.equipID,"+formule+"AS dist FROM Equipement e WHERE"+formule+"<="+distance+" ORDER by dist ASC";
->>>>>>> da4e314761675534b46e686a92cf55e53d55f2d6
     cursor.execute(sql)
     rows = cursor.fetchall()
 
