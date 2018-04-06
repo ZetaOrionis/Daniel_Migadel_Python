@@ -10,7 +10,7 @@ def error404(error):
     return {"Excusez nous, une erreur 404 vient d'apparaître" : 404}
 
 @error(405)
-def error404(error):
+def error405(error):
     return {"Excusez nous, une erreur 405 vient d'apparaître" : 405}
 
 @error(500)
@@ -23,7 +23,7 @@ def error500(error):
 @route('/')
 def home():
     return template('home', url=url )
-   
+
 """ Permet la liasion des fichiers externes aux templates comme les fichiers CSS, ou JS """
 @route('/views/:path#.+#', name='views')
 def static(path):
@@ -38,7 +38,7 @@ def home() :
     pprint(reponse)
     if len(reponse) == 0:
         return template('error')
-    
+
     return json.dumps(reponse)
 
 """ Permet la liasion entre le modèle et la view pour l'autocomplétion par activité, renvoie sous format JSON """
@@ -50,7 +50,7 @@ def home() :
     pprint(reponse)
     if len(reponse) == 0:
         return template('error')
-    
+
     return json.dumps(reponse)
 
 """ Permet la liasion entre le modèle et la view pour la recherche par ville et activité """
@@ -71,7 +71,7 @@ def home() :
 @route('/ville')
 def home() :
     ville = request.query.ville2
-    
+
     reponse = list(modele.rechercheVille(ville))
 
     if len(reponse) == 0:

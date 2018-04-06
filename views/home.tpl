@@ -5,15 +5,16 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../views/css/jquery-ui.css" >
+
     <link rel="stylesheet" href="../views/css/reset.css" >
     <link rel="stylesheet" href="../views/css/home.css" >
+    <link rel="stylesheet" href="../views/css/jquery-ui.css" >
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ url('views', path='script/home.js') }}" charset="utf-8"></script>
   </head>
   <body>
-    
-    <img src="{{ url('views', path='img/wallpaper.png') }}" width="600" height="auto" />
+
+    <img src="{{ url('views', path='img/wallpaper.png') }}" width="500" height="auto" />
     <div id="tabs">
       <ul>
         <li><a href="#tabs-1">Recherche par Ville et Activité </a></li>
@@ -25,7 +26,7 @@
           <p>Ville :
             <input id="ville1" type="text" name="ville1">
           </p>
-          <p>Activité : 
+          <p>Activité :
             <input id="activite" type="text" name="activite">
           </p>
           <input id="Rechercher" type="submit" value="Rechercher">
@@ -36,6 +37,9 @@
           <p>Ville :
             <input id="ville2" type="text" name="ville2">
           </p>
+          <input id="latitude" type="hidden" name="latitude">
+          <input id="longitude" type="hidden" name="longitude">
+          <input id="slider" type="range" min="1" max="100" value="1">
           <input type="submit" value="Rechercher">
         </form>
       </div>

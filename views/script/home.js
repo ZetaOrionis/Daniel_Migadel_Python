@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   //Cette fonction permet l'autocompletion de l'input 'ville1'
-  $('#ville1').autocomplete({ 
+  $('#ville1').autocomplete({
     source :
       function(request, response) {
         $.ajax({
@@ -28,7 +28,7 @@ $(document).ready(function(){
   });
 
   //Cette fonction permet l'autocompletion de l'input 'activite'
-  $('#activite').autocomplete({ 
+  $('#activite').autocomplete({
     source :
       function(request, response) {
         $.ajax({
@@ -59,8 +59,9 @@ $(document).ready(function(){
     $("#tabs").tabs();
   });
 
-  //Cette fonction permet l'autocompletion de l'input 'ville2' 
-  $('#ville2').autocomplete({ 
+  //Cette fonction permet l'autocompletion de l'input 'ville2'
+  
+  $('#ville2').autocomplete({
     source :
       function(request, response) {
         $.ajax({
@@ -86,8 +87,9 @@ $(document).ready(function(){
       }
   });
 
-   //Cette fonction permet l'autocompletion de l'input 'ville2' 
-  $('#activite2').autocomplete({ 
+
+   //Cette fonction permet l'autocompletion de l'input 'ville2'
+  $('#activite2').autocomplete({
     source :
       function(request, response) {
         $.ajax({

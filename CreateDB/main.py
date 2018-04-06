@@ -2,16 +2,41 @@
 #-*- coding: utf-8 -*-
 from databases import *
 from dbEquip import *
-#from parseData import *
 import math
+import json
+import csv
+import urllib.request
 
 print("Allo le monde\n")
 #url = "http://data.paysdelaloire.fr/donnees/detail/equipements-sportifs-espaces-et-sites-de-pratiques-en-pays-de-la-loire-fiches-installations"
 #url = str(input())
 
-data = json.load(open('../res/install.data.paysdelaloire.fr.json'))
-data_1 = json.load(open('../res/equip.data.paysdelaloire.fr.json'))
-data_2 = json.load(open('../res/equi_activites_tabledata.paysdelaloire.fr.json'))
+csvInstallation = urllib.request.urlopen("http://data.paysdelaloire.fr/api/publication/23440003400026_J335/installations_table/content/?format=csv")
+csvInstallationOld = open("../res/installations.csv","w")
+csvInstallationOld.write(csvInstallation.read().decode("utf-8"))
+csvInstallation.close()
+csvInstallationOld.close()
+
+csvEquipement = urllib.request.urlopen("http://data.paysdelaloire.fr/fileadmin/data/datastore/rpdl/sport/23440003400026_J336/equipements.csv")
+csvEquipementOld = open("../res/equipements.csv","w")
+csvEquipementOld.write(csvEquipement.read().decode("iso8859_1").encode('utf8').decode('utf-8'))
+csvEquipement.close()
+csvEquipementOld.close()
+
+csvActivite = urllib.request.urlopen("http://data.paysdelaloire.fr/fileadmin/data/datastore/pdl/PLUS15000/J334_equipements_activites.csv")
+csvActiviteOld = open("../res/activites.csv","w")
+csvActiviteOld.write(csvActivite.read().decode("utf-8"))
+csvActivite.close()
+csvActiviteOld.close()
+
+#
+# data = json.load(open('../res/installations.json'))
+# data_1 = json.load(open('../res/equipements.json'))
+# data_2 = json.load(open('../res/activites.json'))
+
+
+
+
 #pprint(data)
 
 connection, cursor = createConnection()
@@ -26,8 +51,10 @@ connection, cursor = createConnection()
 #""")
 
 #data
-newDatabaseInstallation(cursor)
+dropAllTables(cursor)
+
 newDatabaseCoord(cursor)
+newDatabaseInstallation(cursor)
 
 #data_1
 newDatabaseEquipementType(cursor)
@@ -36,31 +63,107 @@ newDatabaseEquipement(cursor)
 #data_2
 newDatabaseActivites(cursor)
 
-for i in data["data"]:
-    coordonnees = [i["Latitude"],i["Longitude"]]
+# with open('../res/installations.csv') as f:
+#     reader = csv.DictReader(f, delimiter=';')
+#     for row in reader:
+#         # latitude = row["Nom de la voie"]
+#         # longitude = row["Longitude"]
+#         print(row)
+#         print(row[0])
 
-    #cursor.execute("""INSERT INTO Coordonnes(latitude,longitude) VALUES(%s,%s)""",coordonnees)
-    insertIgnoreCoord(cursor,coordonnees)
-    cursor.execute("""SELECT coordId FROM coordonnes where latitude=%s AND longitude=%s""",coordonnees)
+f = open("../res/installations.csv")
+reader = csv.DictReader(f)
+data = [row for row in reader]
+
+for row in data :
+    print(row["Latitude"])
+    print(row['Longitude'])
+    coordonnes = (row["Latitude"],row["Longitude"])
+    insertIgnoreCoord(cursor,coordonnes)
+    cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnes)
     id = cursor.lastrowid
-    row = cursor.fetchone()
-    print(row[0])
-    installation = [i["InsNumeroInstall"],row[0],i["geo"]["name"],
-    i["InsNoVoie"],i["InsLibelleVoie"],i["InsCodePostal"],i["ComLib"]]
+    result = cursor.fetchone()
+
+    print(row["Numéro de l'installation"])
+    print(row["Nom usuel de l'installation"])
+
+    installation = (row["Numéro de l'installation"],result[0],row["Nom usuel de l'installation"],
+    row["Numero de la voie"],row["Nom de la voie"],row["Code postal"],row["Nom de la commune"])
     cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
 
-for a in data_1["data"]:
-    equipementType = [a["EquipementTypeCode"],a["EquipementTypeLib"]]
-    equipement = [a["EquipementId"],a["EquNom"],a["EquipementTypeCode"],a["InsNumeroInstall"]]
+
+# f = open("../res/equipements.csv")
+f = open("../res/equipements.csv")
+reader = csv.DictReader(f, delimiter=';', quoting=csv.QUOTE_NONE)
+data = [row for row in reader]
+
+for row in data:
+    equipementType = [row["EquipementTypeCode"],row["EquipementTypeLib"]]
+    equipement = [row["EquipementId"],row["EquNom"],row["EquGpsX"],row["EquGpsY"],row["EquipementTypeCode"],row["InsNumeroInstall"]]
+
     print(str(equipementType))
     insertEquipementType(cursor,equipementType)
     print(str(equipement))
     insertEquipement(cursor,equipement)
 
-for b in data_2["data"]:
-    activite = [b["ActCode"],b["ActLib"],b["EquipementId"]]
+with open('../res/activites.csv', 'r') as f, open('../res/activites1.csv', 'w') as fo:
+    for line in f:
+        fo.write(line.replace('"', ''))
+
+f = open("../res/activites1.csv")
+reader = csv.DictReader(f, delimiter=',', quoting=csv.QUOTE_NONE)
+data = [row for row in reader]
+for row in data:
+    activite = [row["ActCode"],row["ActLib"],row["EquipementId"]]
     print(str(activite))
     insertActivite(cursor,activite)
+# reader = csv.DictReader(f)
+# data = [row for row in reader]
+#
+# for row in data :
+#
+# writer = csv.writer(open("../res/activites.csv", "wb"), quoting=csv.QUOTE_NONE)
+# reader = csv.reader(open("../res/activites1.csv", "rb"), skipinitialspace=True)
+# writer.writerows(reader)
+
+
+
+
+
+print(["Latitude"])
+print(["Longitude"])
+
+
+# for i in data :
+#     coordonnees = [i["Latitude"],i["Longitude"]]
+#     print(i["Latitude"])
+#     print(i["Longitude"])
+#
+#
+#     #cursor.execute("""INSERT INTO Coordonnes(latitude,longitude) VALUES(%s,%s)""",coordonnees)
+#     insertIgnoreCoord(cursor,coordonnees)
+#     cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnees)
+#     id = cursor.lastrowid
+#     row = cursor.fetchone()
+#     # print(row[0])
+#
+#     installation = [i["Numéro de l'installation"],row[0],i["Nom usuel de l'installation"],
+#     i["Numero de la voie"],i["Nom de la voie"],i["Code postal"],i["Nom de la commune"]]
+#     cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
+
+# for a in data_1:
+#     equipementType = [a[EquipementTypeCode],a["EquipementTypeLib"]]
+#     equipement = [a["EquipementId"],a["EquNom"],a["EquGpsX"],a["EquGpsY"],a["EquipementTypeCode"],a["InsNumeroInstall"]]
+#
+#     # print(str(equipementType))
+#     insertEquipementType(cursor,equipementType)
+#     # print(str(equipement))
+#     insertEquipement(cursor,equipement)
+#
+# for b in data_2["data"]:
+#     activite = [b["ActCode"],b["ActLib"],b["EquipementId"]]
+#     print(str(activite))
+#     insertActivite(cursor,activite)
 
 # latitude = math.radians(47.075698)
 # longitude = math.radians(-1.400693)

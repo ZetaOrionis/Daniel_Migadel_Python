@@ -1211,6 +1211,7 @@ body .ui-tooltip {
 .ui-corner-bottom,
 .ui-corner-right,
 .ui-corner-br {
+	height: 10%;
 	background-color: #E29D34;
 	border-bottom-right-radius: 4px;
 }
