@@ -3,6 +3,8 @@ from model import modele
 from pprint import pprint
 import json
 
+
+""" Permet la gestion des erreurs pouvant survenir durant l'utilisation du site """
 @error(404)
 def error404(error):
     return {"Excusez nous, une erreur 404 vient d'apparaître" : 404}
@@ -15,17 +17,20 @@ def error404(error):
 def error500(error):
     return {"Excusez nous, une erreur 500 vient d'apparaître" : 500}
 
+
+
+""" Permet l'affichage de la page d'accueil du site """
 @route('/')
 def home():
-    activites = list(modele.rechercheActivites())
-    return template('home',activites=activites, url=url )
+    return template('home', url=url )
    
-
+""" Permet la liasion des fichiers externes aux templates comme les fichiers CSS, ou JS """
 @route('/views/:path#.+#', name='views')
 def static(path):
     return static_file(path, root='views')
 
-@route('/autocompletionville', methods='POST')
+""" Permet la liasion entre le modèle et la view pour l'autocomplétion par ville, renvoie sous format JSON """
+@route('/autocompletionville')
 def home() :
     ville = request.query.commune
 
@@ -36,7 +41,8 @@ def home() :
     
     return json.dumps(reponse)
 
-@route('/autocompletionactivite', methods='POST')
+""" Permet la liasion entre le modèle et la view pour l'autocomplétion par activité, renvoie sous format JSON """
+@route('/autocompletionactivite')
 def home() :
     activite = request.query.activite
 
@@ -47,31 +53,45 @@ def home() :
     
     return json.dumps(reponse)
 
-
-@route('/traitement')
+""" Permet la liasion entre le modèle et la view pour la recherche par ville et activité """
+@route('/villeActivite')
 def home() :
     activite = request.query.activite
     ville = request.query.ville1
 
-    reponse = list(modele.recherche(activite,ville))
+    reponse = list(modele.rechercheVilleActivite(activite,ville))
     if len(reponse) == 0:
         return template('error')
 
     lenreponse = len(reponse)
 
-    return template('reponse', reponse=reponse, lenreponse=lenreponse)
+    return template('reponse', reponse=reponse, lenreponse=lenreponse, url=url)
 
-@route('/test')
+""" Permet la liasion entre le modèle et la view pour la recherche par ville """
+@route('/ville')
 def home() :
     ville = request.query.ville2
     
-    reponse = list(modele.rechercheInstallation(ville))
+    reponse = list(modele.rechercheVille(ville))
 
     if len(reponse) == 0:
         return template('error')
 
     lenreponse = len(reponse)
 
-    return template('reponse', reponse=reponse, lenreponse=lenreponse)
+    return template('reponse', reponse=reponse, lenreponse=lenreponse, url=url)
+
+""" Permet la liasion entre le modèle et la view pour la recherche par activité """
+@route('/activite')
+def home() :
+    activite = request.query.activite2
+
+    reponse = list(modele.rechercheActivite(activite))
+    if len(reponse) == 0:
+        return template('error')
+
+    lenreponse = len(reponse)
+
+    return template('reponse', reponse=reponse, lenreponse=lenreponse, url=url)
 
 run(host='localhost', port=8000, debug=False, reloader=True)

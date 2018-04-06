@@ -1,12 +1,22 @@
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #A7D2A3;
+}
+
 #table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    text-align: center;
 }
 
 #table td, #table th {
     border: 1px solid #ddd;
     padding: 8px;
+    width: 10%;
 }
 
 #table tr:nth-child(even){background-color: #f2f2f2;}
@@ -16,7 +26,7 @@
 #table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: #4CAF50;
     color: white;
 }
@@ -24,26 +34,61 @@
 h2 {
   text-align: center;
 }
+
 #lenreponse {
   color: #4CAF50;
 }
 
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
+
 #map {
-	margin-left: 30%;
-	margin-top: 10%;
   width: 50%;
-  height: 100%;
+  height: 50%;
+  margin-left: 25%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
-/* Optional: Makes the sample page fill the window. */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #A7D2A3;
-}
+
 
 #lat, #lng {
   display: none;
 }
+
+.modal{
+    width: 50%;
+    height: 50%;
+    position: fixed;
+    background-color: #A7D2A3;
+    display: none;
+    top: 25%;
+    left: 25%;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modalbg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 99;
+    display: none;
+}
+
+.modal_close{
+    font-size: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.modal_close:hover{
+    font-weight: bold;
+}
+
+#mapSpecifique {
+  height: 100%;
+  width: 100%;
+}
+

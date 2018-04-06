@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-  $('#ville1').autocomplete({ //$(this) = autocomplete
+  //Cette fonction permet l'autocompletion de l'input 'ville1'
+  $('#ville1').autocomplete({ 
     source :
       function(request, response) {
         $.ajax({
@@ -26,7 +27,8 @@ $(document).ready(function(){
       }
   });
 
-  $('#activite').autocomplete({ //$(this) = autocomplete
+  //Cette fonction permet l'autocompletion de l'input 'activite'
+  $('#activite').autocomplete({ 
     source :
       function(request, response) {
         $.ajax({
@@ -52,11 +54,13 @@ $(document).ready(function(){
       }
   });
 
+  //Cette fonction fait appel à la fonction tabs de jquery.ui qui permet de créer des onglets
   $(function() {
     $("#tabs").tabs();
   });
 
-  $('#ville2').autocomplete({ //$(this) = autocomplete
+  //Cette fonction permet l'autocompletion de l'input 'ville2' 
+  $('#ville2').autocomplete({ 
     source :
       function(request, response) {
         $.ajax({
@@ -79,6 +83,33 @@ $(document).ready(function(){
       minLength:2,
       select: function(event,ui) {
         $("#ville2").val(ui.value);
+      }
+  });
+
+   //Cette fonction permet l'autocompletion de l'input 'ville2' 
+  $('#activite2').autocomplete({ 
+    source :
+      function(request, response) {
+        $.ajax({
+          url : '/autocompletionactivite',
+          dataType : 'json',
+          type : "GET",
+          data: {
+            activite : $('#activite2').val()
+          }
+        }).done(function(data) {
+          var transData = data.map(function(value){
+            return {
+              label : value,
+              value : value
+            };
+          })
+          return response(transData);
+        });
+      },
+      minLength:2,
+      select: function(event,ui) {
+        $("#activite").val(ui.value);
       }
   });
 
