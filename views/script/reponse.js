@@ -63,6 +63,8 @@ function initialisationMap() {
 
   var coordonnees = document.querySelectorAll('[data-latitude],[data-longitude]');
   console.log(coordonnees);
+  console.log(coordonnees.item(0));
+  console.log(coordonnees.item(1));
   for (i = 0; i < 10; ++i) {
     console.log(coordonnees[i]);
     if(i == 0) {
