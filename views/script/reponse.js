@@ -60,13 +60,15 @@ function initialisationMap() {
   var lati = document.getElementById('lat');
   var lngi = document.getElementById('lng');
 
+  var arraylignes = document.getElementById('table').rows;
+
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
     center: {lat: 47.216501, lng: -1.554609}
   });
 
   var locations = [];
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < arraylignes.length-1; i++) {
       locations.push({lat: parseFloat(lati.innerText), lng: parseFloat(lngi.innerText)});
   }
 
