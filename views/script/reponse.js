@@ -44,17 +44,16 @@ function champsAbsent() {
   });
 }
 
-//Cette fonction permet de tri par ordre alphabétique le tableau en fonction de la première colonne
+//Cette fonction permet d'arroundir la distance obtenu par la base de données
 function sortTable() {
-    tbody = $('#table').find('tbody');
-    var i = 0;
-    $('td:last-child').each(function() {
-      var lng = $(this).eq(0).html();
-      var newlng = parseFloat(lng).toFixed(2);
-       $(this).eq(0).html(newlng);
-      i++;
-    });
-    
+  tbody = $('#table').find('tbody');
+  var i = 0;
+  $('td:last-child').each(function() {
+    var lng = $(this).eq(0).html();
+    var newlng = parseFloat(lng).toFixed(2);
+     $(this).eq(0).html(newlng);
+    i++;
+  });  
 }
 
 //Cette fonction permet d'afficher la map situé en bas de la page HTML, elle permet d'affiché tous les
