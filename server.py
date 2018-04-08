@@ -63,15 +63,29 @@ def home() :
     latitude = request.query.latitude
     longitude = request.query.longitude
     distance = request.query.slider
+    ville = request.query.ville2
+    radio = request.query.radio
 
+    print("RADIO ---- > "+radio)
 
-    reponse = list(modele.rechercheVilleActivite(activite,latitude,longitude,distance))
-    if len(reponse) == 0:
+    if radio == "adresse" :
+        print("-------> ADRESSE")
+        reponse = list(modele.rechercheVilleActivite(activite,latitude,longitude,distance))
+        if len(reponse) == 0:
+            return template('error')
+        lenreponse = len(reponse)
+        return template('reponse', reponse=reponse, lenreponse=lenreponse, url=url)
+
+    elif radio == "ville":
+        print("-------> VILLE")
+        reponse = list(modele.rechercheVilleLargeActivite(activite,ville))
+        if len(reponse) == 0:
+            return template('error')
+        lenreponse = len(reponse)
+        return template('reponse2', reponse=reponse, lenreponse=lenreponse, url=url)
+
+    else :
         return template('error')
-
-    lenreponse = len(reponse)
-
-    return template('reponse', reponse=reponse, lenreponse=lenreponse, url=url)
 
 """ Permet la liasion entre le modèle et la view pour la recherche par ville """
 @route('/ville')

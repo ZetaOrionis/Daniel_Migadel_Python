@@ -5,18 +5,6 @@ import json
 from pprint import pprint
 import mysql.connector
 
-# #création d'une connection au gestionnaire PhpMyAdmin
-# def createConnection() :
-#
-#     conn = mysql.connector.connect(host=config.HOST,user=config.USER,password=config.PASSWORD, database=config.BASE)
-#     cursor = conn.cursor()
-#     return (conn,cursor)
-#
-# #création d'une connection au gestionnaire PhpMyAdmin
-# def closeConnection(conn) :
-#     conn.commit()
-#     conn.close()
-
 #création de la table installation
 #elle contient divers informations sur les installations sportive des Pays de La loire
 def newDatabaseInstallation(cursor) :

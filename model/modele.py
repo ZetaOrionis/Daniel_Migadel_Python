@@ -33,6 +33,22 @@ def rechercheVilleActivite(activite,latitude,longitude,distance) :
     cursor.close()
     conn.close()
 
+""" Selection d'une activitée précise dans une ville donnée """
+def rechercheVilleLargeActivite(activite,ville) :
+
+    """ Connection à la base de données """
+
+    connection,cursor = CreateDB.dbEquip.createConnection()
+
+    rows = CreateDB.dbEquip.selectActiviteVille(cursor,activite,ville)
+
+    print(rows)
+    return rows
+
+    cursor.close()
+    conn.close()
+
+
 """ Recherche par activitée """
 def rechercheActivite(activite) :
 
@@ -55,7 +71,7 @@ def rechercheActivite(activite) :
 
 """ Cette fonction permet l'autocompletion du champs ville """
 def autocompletionville(ville) :
-    connection,cursor = CreateDB.db.dbEquip.createConnection()
+    connection,cursor = CreateDB.dbEquip.createConnection()
 
     commune = '%'+ville+'%'
 

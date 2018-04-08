@@ -19,9 +19,6 @@
 
     <img src="{{ url('views', path='img/wallpaper.png') }}" width="500" height="auto" />
 
-      <p>Ville :
-        <input id="ville" type="text" name="ville">
-      </p>
       <!-- <p>Activité :
         <input id="activite" type="text" name="activite">
       </p> -->
@@ -37,6 +34,15 @@
         <form method="get" action="/villeActivite">
           <!-- <input id="pac-input" class="controls" type="text"
           placeholder="Enter a location" size="50"> -->
+          <div id="villePrecise">
+          <input type="radio" id="radio1" name="radio" value="ville">Je précise une ville
+          <p>Ville :
+            <input id="ville2" type="text" class="controls" name="ville2">
+          </p>
+        </div>
+
+          <div id="adresse">
+          <input type="radio" id="radio2" name="radio" value="adresse">Je choisis un rayon autour de moi
           <p>Ville :
             <input id="ville1" type="text" class="controls" name="ville1">
           </p>
@@ -45,6 +51,7 @@
           </span>
           <input id="latitude" type="hidden" name="latitude">
           <input id="longitude" type="hidden" name="longitude">
+        </div>
 
           <p>Activité :
             <input id="activite" type="text" name="activite">

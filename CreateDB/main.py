@@ -6,13 +6,11 @@ import csv
 import urllib.request
 import dbEquip
 import databases
-# import db
-# from db.databases import *
 
 print("Téléchargement en cours ...\n")
-#url = "http://data.paysdelaloire.fr/donnees/detail/equipements-sportifs-espaces-et-sites-de-pratiques-en-pays-de-la-loire-fiches-installations"
-#url = str(input())
 
+
+#on extrait les fichiers via les url sous format csv
 csvInstallation = urllib.request.urlopen("http://data.paysdelaloire.fr/api/publication/23440003400026_J335/installations_table/content/?format=csv")
 csvInstallationOld = open("../res/installations.csv","w")
 csvInstallationOld.write(csvInstallation.read().decode("utf-8"))
@@ -31,63 +29,36 @@ csvActiviteOld.write(csvActivite.read().decode("utf-8"))
 csvActivite.close()
 csvActiviteOld.close()
 
-#
-# data = json.load(open('../res/installations.json'))
-# data_1 = json.load(open('../res/equipements.json'))
-# data_2 = json.load(open('../res/activites.json'))
-
-
-
-#pprint(data)
 
 connection, cursor = dbEquip.createConnection()
-#cursor.execute("""
-#CREATE TABLE IF NOT EXISTS installations (
-#    id int(6) NOT NULL AUTO_INCREMENT,
-#    num int(5) DEFAULT NULL,
-#    libelleVoie  varchar(50) DEFAULT NULL,
-#    num2 int(5) DEFAULT NULL,
-#    PRIMARY KEY(id)
-#);
-#""")
 
-#data
 print("Connexion réussie ...\n")
 print("Installation des tables ...\n")
 
+#Initalisation de toutes les tables que nous allons les
 databases.dropAllTables(cursor)
-
 databases.newDatabaseCoord(cursor)
 databases.newDatabaseInstallation(cursor)
 
-#data_1
 dbEquip.newDatabaseEquipementType(cursor)
 dbEquip.newDatabaseEquipement(cursor)
 
-#data_2
 dbEquip.newDatabaseActivites(cursor)
 
-# with open('../res/installations.csv') as f:
-#     reader = csv.DictReader(f, delimiter=';')
-#     for row in reader:
-#         # latitude = row["Nom de la voie"]
-#         # longitude = row["Longitude"]
-#         print(row)
-#         print(row[0])
 
+#on lit le fichier instaalation
 f = open("../res/installations.csv")
 reader = csv.DictReader(f)
 data = [row for row in reader]
 
 for row in data :
-    print(row["Latitude"])
-    print(row['Longitude'])
+
     coordonnes = (row["Latitude"],row["Longitude"])
     databases.insertIgnoreCoord(cursor,coordonnes)
     cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnes)
     id = cursor.lastrowid
     result = cursor.fetchone()
-
+    #on retient l'id des coordonnées pour ensuite l'insérer dans la table installation
     print(row["Numéro de l'installation"])
     print(row["Nom usuel de l'installation"])
 
@@ -96,7 +67,8 @@ for row in data :
     cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
 
 
-# f = open("../res/equipements.csv")
+#on lit le fichier equipements
+#on fixe le délimiteur ;
 f = open("../res/equipements.csv")
 reader = csv.DictReader(f, delimiter=';', quoting=csv.QUOTE_NONE)
 data = [row for row in reader]
@@ -105,11 +77,15 @@ for row in data:
     equipementType = [row["EquipementTypeCode"],row["EquipementTypeLib"]]
     equipement = [row["EquipementId"],row["EquNom"],row["EquGpsX"],row["EquGpsY"],row["EquipementTypeCode"],row["InsNumeroInstall"]]
 
+    #on insère les typles dans EquipementType et Equipemet
     print(str(equipementType))
     dbEquip.insertEquipementType(cursor,equipementType)
     print(str(equipement))
     dbEquip.insertEquipement(cursor,equipement)
 
+
+#on lit le fichier activites et on le réécrit dans un autre (remplacement des guillemets)
+#on fixe le délimiteur ;
 with open('../res/activites.csv', 'r') as f, open('../res/activites1.csv', 'w') as fo:
     for line in f:
         fo.write(line.replace('"', ''))
@@ -121,129 +97,10 @@ for row in data:
     activite = [row["ActCode"],row["ActLib"],row["EquipementId"]]
     print(str(activite))
     dbEquip.insertActivite(cursor,activite)
-# reader = csv.DictReader(f)
-# data = [row for row in reader]
-#
-# for row in data :
-#
-# writer = csv.writer(open("../res/activites.csv", "wb"), quoting=csv.QUOTE_NONE)
-# reader = csv.reader(open("../res/activites1.csv", "rb"), skipinitialspace=True)
-# writer.writerows(reader)
 
 
-
-
-
-print(["Latitude"])
-print(["Longitude"])
-
-
-# for i in data :
-#     coordonnees = [i["Latitude"],i["Longitude"]]
-#     print(i["Latitude"])
-#     print(i["Longitude"])
-#
-#
-#     #cursor.execute("""INSERT INTO Coordonnes(latitude,longitude) VALUES(%s,%s)""",coordonnees)
-#     insertIgnoreCoord(cursor,coordonnees)
-#     cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnees)
-#     id = cursor.lastrowid
-#     row = cursor.fetchone()
-#     # print(row[0])
-#
-#     installation = [i["Numéro de l'installation"],row[0],i["Nom usuel de l'installation"],
-#     i["Numero de la voie"],i["Nom de la voie"],i["Code postal"],i["Nom de la commune"]]
-#     cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
-
-# for a in data_1:
-#     equipementType = [a[EquipementTypeCode],a["EquipementTypeLib"]]
-#     equipement = [a["EquipementId"],a["EquNom"],a["EquGpsX"],a["EquGpsY"],a["EquipementTypeCode"],a["InsNumeroInstall"]]
-#
-#     # print(str(equipementType))
-#     insertEquipementType(cursor,equipementType)
-#     # print(str(equipement))
-#     insertEquipement(cursor,equipement)
-#
-# for b in data_2["data"]:
-#     activite = [b["ActCode"],b["ActLib"],b["EquipementId"]]
-#     print(str(activite))
-#     insertActivite(cursor,activite)
-
-# deleteActiviteVide(cursor)
-# reader = csv.DictReader(f)
-# data = [row for row in reader]
-#
-# for row in data :
-#
-# writer = csv.writer(open("../res/activites.csv", "wb"), quoting=csv.QUOTE_NONE)
-# reader = csv.reader(open("../res/activites1.csv", "rb"), skipinitialspace=True)
-# writer.writerows(reader)
-
-
-
-
-
-print(["Latitude"])
-print(["Longitude"])
-
-
-# for i in data :
-#     coordonnees = [i["Latitude"],i["Longitude"]]
-#     print(i["Latitude"])
-#     print(i["Longitude"])
-#
-#
-#     #cursor.execute("""INSERT INTO Coordonnes(latitude,longitude) VALUES(%s,%s)""",coordonnees)
-#     insertIgnoreCoord(cursor,coordonnees)
-#     cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnees)
-#     id = cursor.lastrowid
-#     row = cursor.fetchone()
-#     # print(row[0])
-#
-#     installation = [i["Numéro de l'installation"],row[0],i["Nom usuel de l'installation"],
-#     i["Numero de la voie"],i["Nom de la voie"],i["Code postal"],i["Nom de la commune"]]
-#     cursor.execute("""INSERT INTO Installation(installationId,coordId,name,noVoie,libelleVoie,codePostal,commune) VALUES(%s,%s,%s,%s,%s,%s,%s)""",installation)
-
-# for a in data_1:
-#     equipementType = [a[EquipementTypeCode],a["EquipementTypeLib"]]
-#     equipement = [a["EquipementId"],a["EquNom"],a["EquGpsX"],a["EquGpsY"],a["EquipementTypeCode"],a["InsNumeroInstall"]]
-#
-#     # print(str(equipementType))
-#     insertEquipementType(cursor,equipementType)
-#     # print(str(equipement))
-#     insertEquipement(cursor,equipement)
-#
-# for b in data_2["data"]:
-#     activite = [b["ActCode"],b["ActLib"],b["EquipementId"]]
-#     print(str(activite))
-#     insertActivite(cursor,activite)
-
-# latitude = math.radians(47.075698)
-# longitude = math.radians(-1.400693)
-# lat = math.radians(46.333078)
-# long = math.radians(-1.304158)
-#
-# a = math.cos(latitude)*math.cos(latitude)*math.cos(longitude-longitude)
-# b = math.sin(latitude)*math.sin(latitude)
-# c = math.acos(a+b)
-# d = 6366*c
-# print(str(a))
-# print(str(b))
-# print(str(c))
-# print(str(d))
-#
-# print(str(latitude))
-# print(str(longitude))
-# f = 6366*math.acos(math.cos(latitude)*math.cos(lat)*math.cos(long-longitude)+math.sin(latitude)*math.sin(lat))
+#on supprimer les tuples ayant activitID = 0 car le fichier csv a des données inutiles
 dbEquip.deleteActiviteVide(cursor)
-rows = dbEquip.selectLocationDistance(cursor,3,47.075698,-1.40069,"Basket-Ball")
-print(rows)
 
-#    print(i["InsNoVoie"])
-#    print(i["InsLibelleVoie"])
-#    print(i["InsCodePostal"])
+#oon ferme la connexion
 dbEquip.closeConnection(connection)
-#print("url"+url+"\n")
-#print("data[InsLibelleVoie] = "+str(data["data"][0]["InsLibelleVoie"]))
-
-#http://apprendre-python.com/page-database-data-base-donnees-query-sql-mysql-postgre-sqlite

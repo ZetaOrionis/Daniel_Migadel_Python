@@ -1,9 +1,14 @@
+body{
+	margin:0;
+	padding:0;
+}
+
 html {
 	background-color: #A7D2A3;
-
-p, input {
-  text-align: center;
 }
+/* p, input {
+  text-align: center;
+} */
 
 #activite {
 	overflow: hidden;
@@ -15,11 +20,28 @@ p, input {
 }
 
 img {
-	display: none;
 	margin-left: 10%;
 	margin-top: 10%;
 }
 
 input[type=submit] {
   background-color: #9F681D;
+}
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+
+#adresse{
+	display:inline-block;
+	vertical-align: top;
+}
+
+
+#villePrecise{
+	display:inline-block;
+	vertical-align: middle;
 }
