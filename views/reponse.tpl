@@ -23,6 +23,7 @@
           <th>Nom du Lieu</th>
           <th>Adresse</th>
           <th>Commune</th>
+          <th>Distance en KM</th>
         </tr>
       </thead>
       % for rep in reponse :
@@ -35,11 +36,11 @@
           <td>{{name}}</td>
           <td>{{noVoie}}{{libelleVoie}}</td>
           <td>{{commune}}</td>
-          <td>{{formule}}</td>
           <div class="coordonnee">
             <td id="lat" data-latitude="{{equGpsY}}"> {{equGpsY}} </td>
             <td id="lng" data-longitude="{{equGpsX}}" > {{equGpsX}} </td>
           </div>
+          <td>{{formule}}</td>
         </tr>
       % end
     </table>
