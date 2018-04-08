@@ -54,9 +54,6 @@ function sortTable() {
        $(this).eq(0).html(newlng);
       i++;
     });
-    tbody.find('tr').sort(function(a, b) {
-      return $('td:last-child', a).text().localeCompare($('td:last-child', b).text());
-    }).appendTo(tbody);
     
 }
 
