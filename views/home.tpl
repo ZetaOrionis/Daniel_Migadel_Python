@@ -10,28 +10,53 @@
     <link rel="stylesheet" href="../views/css/home.css" >
     <link rel="stylesheet" href="../views/css/jquery-ui.css" >
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFlDCeM6-nRxCV0CeuvFMRFZ84fPvMi8U&libraries=places"></script>
     <script type="text/javascript" src="{{ url('views', path='script/home.js') }}" charset="utf-8"></script>
+    <script type="text/javascript" src="{{ url('views', path='script/codeVilleComplete.js') }}" charset="utf-8"></script>
+
   </head>
   <body>
 
     <img src="{{ url('views', path='img/wallpaper.png') }}" width="500" height="auto" />
+
+      <p>Ville :
+        <input id="ville" type="text" name="ville">
+      </p>
+      <!-- <p>Activité :
+        <input id="activite" type="text" name="activite">
+      </p> -->
     <div id="tabs">
       <ul>
         <li><a href="#tabs-1">Recherche par Ville et Activité </a></li>
         <li><a href="#tabs-2">Recherche par Ville </a></li>
         <li><a href="#tabs-3">Recherche par Activité </a></li>
       </ul>
+
+
       <div id="tabs-1">
         <form method="get" action="/villeActivite">
+          <!-- <input id="pac-input" class="controls" type="text"
+          placeholder="Enter a location" size="50"> -->
           <p>Ville :
-            <input id="ville1" type="text" name="ville1">
+            <input id="ville1" type="text" class="controls" name="ville1">
           </p>
+          <span>Dans un rayon de <span id="slider_value">1</span> km
+          <input id="slider" type="range" min="1" max="100" value="1" name="slider">
+          </span>
+          <input id="latitude" type="hidden" name="latitude">
+          <input id="longitude" type="hidden" name="longitude">
+
           <p>Activité :
             <input id="activite" type="text" name="activite">
           </p>
           <input id="Rechercher" type="submit" value="Rechercher">
         </form>
       </div>
+
+
+
+
+
       <div id="tabs-2">
         <form method="get" action="/ville">
           <p>Ville :
@@ -43,6 +68,9 @@
           <input type="submit" value="Rechercher">
         </form>
       </div>
+
+
+
       <div id="tabs-3">
         <form method="get" action="/activite">
           <p>Activité :
@@ -51,6 +79,8 @@
           <input type="submit" value="Rechercher">
         </form>
       </div>
+
+
     </div>
   </body>
 </html>

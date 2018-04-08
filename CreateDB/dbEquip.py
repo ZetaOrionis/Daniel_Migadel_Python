@@ -1,12 +1,24 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
+# from db.config import *
+# from CreateDB.db.config import *
 import json
 from pprint import pprint
-import config
 import mysql.connector
 
+
+
+
+HOST = "localhost"
+USER = "root"
+PASSWORD = ""
+BASE = "installations_sportives"
+
+
+
+
 def createConnection() :
-    conn = mysql.connector.connect(host=config.HOST,user=config.USER,password=config.PASSWORD, database=config.BASE)
+    conn = mysql.connector.connect(host=HOST,user=USER,password=PASSWORD, database=BASE)
     cursor = conn.cursor()
     return (conn,cursor)
 
@@ -91,13 +103,18 @@ def insertActivite(cursor,activite) :
 
 
 
-def selectLocationDistance(cursor,distance,latitude,longitude) :
+
+def selectLocationDistance(cursor,distance,latitude,longitude,activite) :
     latitude = str(latitude)
     longitude = str(longitude)
     distance = str(distance)
-    formule="(6366*acos(cos(radians("+latitude+"))*cos(radians(`e.equGpsY`))*cos(radians(`equGpsX`)-radians("+longitude+"))+sin(radians("+latitude+"))*sin(radians(`e.equGpsY`))))"
-    sql="SELECT e.equipID,"+formule+"AS dist FROM Equipement e WHERE"+formule+"<="+distance+" ORDER by dist ASC";
-    cursor.execute(sql)
+    activite = str(activite)
+
+    objet = [distance,activite]
+
+    formule="(6366*acos(cos(radians("+latitude+"))*cos(radians(e.equGpsY))*cos(radians(e.equGpsX)-radians("+longitude+"))+sin(radians("+latitude+"))*sin(radians(e.equGpsY))))"
+    sql="SELECT a.activiteLib, e.equNom, et.equipTypeLib, i.name, i.noVoie, i.libelleVoie, i.commune, e.equGpsY, e.equGpsX,"+formule+" AS dist FROM Installation i, Activite a,Equipement e,EquipementType et WHERE"+formule+"<= %s and a.activiteLib=%s and a.equipID=e.equipID and e.installationId=i.installationId and e.equipTypecode=et.equipTypeCode ORDER by dist ASC";
+    cursor.execute(sql,objet)
     rows = cursor.fetchall()
 
     return rows
@@ -112,3 +129,6 @@ def searchInstallation(cursor,latitude,longitude,distance) :
     rows = cursor.fetchall()
 
     return rows
+
+def deleteActiviteVide(cursor) :
+    cursor.execute("""DELETE FROM Activite where activiteId=0""")

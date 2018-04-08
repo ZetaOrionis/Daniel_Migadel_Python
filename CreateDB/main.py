@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
-from databases import *
-from dbEquip import *
 import math
 import json
 import csv
 import urllib.request
+import dbEquip
+import databases
+# import db
+# from db.databases import *
 
-print("Allo le monde\n")
+print("Téléchargement en cours ...\n")
 #url = "http://data.paysdelaloire.fr/donnees/detail/equipements-sportifs-espaces-et-sites-de-pratiques-en-pays-de-la-loire-fiches-installations"
 #url = str(input())
 
@@ -36,10 +38,9 @@ csvActiviteOld.close()
 
 
 
-
 #pprint(data)
 
-connection, cursor = createConnection()
+connection, cursor = dbEquip.createConnection()
 #cursor.execute("""
 #CREATE TABLE IF NOT EXISTS installations (
 #    id int(6) NOT NULL AUTO_INCREMENT,
@@ -51,17 +52,20 @@ connection, cursor = createConnection()
 #""")
 
 #data
-dropAllTables(cursor)
+print("Connexion réussie ...\n")
+print("Installation des tables ...\n")
 
-newDatabaseCoord(cursor)
-newDatabaseInstallation(cursor)
+databases.dropAllTables(cursor)
+
+databases.newDatabaseCoord(cursor)
+databases.newDatabaseInstallation(cursor)
 
 #data_1
-newDatabaseEquipementType(cursor)
-newDatabaseEquipement(cursor)
+dbEquip.newDatabaseEquipementType(cursor)
+dbEquip.newDatabaseEquipement(cursor)
 
 #data_2
-newDatabaseActivites(cursor)
+dbEquip.newDatabaseActivites(cursor)
 
 # with open('../res/installations.csv') as f:
 #     reader = csv.DictReader(f, delimiter=';')
@@ -79,7 +83,7 @@ for row in data :
     print(row["Latitude"])
     print(row['Longitude'])
     coordonnes = (row["Latitude"],row["Longitude"])
-    insertIgnoreCoord(cursor,coordonnes)
+    databases.insertIgnoreCoord(cursor,coordonnes)
     cursor.execute("""SELECT coordId FROM Coordonnes where latitude=%s AND longitude=%s""",coordonnes)
     id = cursor.lastrowid
     result = cursor.fetchone()
@@ -102,9 +106,9 @@ for row in data:
     equipement = [row["EquipementId"],row["EquNom"],row["EquGpsX"],row["EquGpsY"],row["EquipementTypeCode"],row["InsNumeroInstall"]]
 
     print(str(equipementType))
-    insertEquipementType(cursor,equipementType)
+    dbEquip.insertEquipementType(cursor,equipementType)
     print(str(equipement))
-    insertEquipement(cursor,equipement)
+    dbEquip.insertEquipement(cursor,equipement)
 
 with open('../res/activites.csv', 'r') as f, open('../res/activites1.csv', 'w') as fo:
     for line in f:
@@ -116,7 +120,7 @@ data = [row for row in reader]
 for row in data:
     activite = [row["ActCode"],row["ActLib"],row["EquipementId"]]
     print(str(activite))
-    insertActivite(cursor,activite)
+    dbEquip.insertActivite(cursor,activite)
 # reader = csv.DictReader(f)
 # data = [row for row in reader]
 #
@@ -165,7 +169,7 @@ print(["Longitude"])
 #     print(str(activite))
 #     insertActivite(cursor,activite)
 
-deleteActiviteVide(cursor)
+# deleteActiviteVide(cursor)
 # reader = csv.DictReader(f)
 # data = [row for row in reader]
 #
@@ -231,15 +235,14 @@ print(["Longitude"])
 # print(str(latitude))
 # print(str(longitude))
 # f = 6366*math.acos(math.cos(latitude)*math.cos(lat)*math.cos(long-longitude)+math.sin(latitude)*math.sin(lat))
-
-#print("Formule calculée -- >"+str(f))
-rows = selectLocationDistance(cursor,20,47.075698,-1.40069)
+dbEquip.deleteActiviteVide(cursor)
+rows = dbEquip.selectLocationDistance(cursor,3,47.075698,-1.40069,"Basket-Ball")
 print(rows)
 
 #    print(i["InsNoVoie"])
 #    print(i["InsLibelleVoie"])
 #    print(i["InsCodePostal"])
-closeConnection(connection)
+dbEquip.closeConnection(connection)
 #print("url"+url+"\n")
 #print("data[InsLibelleVoie] = "+str(data["data"][0]["InsLibelleVoie"]))
 

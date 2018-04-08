@@ -1,21 +1,21 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
+# import db.config
 import json
 from pprint import pprint
-from config import *
 import mysql.connector
 
-#création d'une connection au gestionnaire PhpMyAdmin
-def createConnection() :
-
-    conn = mysql.connector.connect(host=config.HOST,user=config.USER,password=config.PASSWORD, database=config.BASE)
-    cursor = conn.cursor()
-    return (conn,cursor)
-
-#création d'une connection au gestionnaire PhpMyAdmin
-def closeConnection(conn) :
-    conn.commit()
-    conn.close()
+# #création d'une connection au gestionnaire PhpMyAdmin
+# def createConnection() :
+#
+#     conn = mysql.connector.connect(host=config.HOST,user=config.USER,password=config.PASSWORD, database=config.BASE)
+#     cursor = conn.cursor()
+#     return (conn,cursor)
+#
+# #création d'une connection au gestionnaire PhpMyAdmin
+# def closeConnection(conn) :
+#     conn.commit()
+#     conn.close()
 
 #création de la table installation
 #elle contient divers informations sur les installations sportive des Pays de La loire
@@ -83,17 +83,6 @@ def insertInstallation(cursor,installation) :
 def insertIgnoreCoord(cursor, coordonnes) :
     cursor.execute("""INSERT IGNORE INTO Coordonnes(latitude,longitude) VALUES (%s,%s)""",coordonnes)
 
-
-def selectLocationDistance(cursor,distance,latitude,longitude) :
-    latitude = str(latitude)
-    longitude = str(longitude)
-    distance = str(distance)
-    formule="(6366*acos(cos(radians("+latitude+"))*cos(radians(`latitude`))*cos(radians(`longitude`)-radians("+longitude+"))+sin(radians("+latitude+"))*sin(radians(`latitude`))))"
-    sql="SELECT coordId,"+formule+"AS dist FROM Coordonnes WHERE"+formule+"<="+distance+" ORDER by dist ASC";
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-
-    return rows
 
 def searchInstallation(cursor,latitude,longitude,distance) :
     latitude = str(latitude)

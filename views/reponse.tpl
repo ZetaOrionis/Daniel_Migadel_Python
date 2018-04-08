@@ -26,7 +26,8 @@
         </tr>
       </thead>
       % for rep in reponse :
-        % (activiteLib, equNom, equipTypeLib, name, noVoie, libelleVoie, commune, equGpsY, equGpsX) = rep
+        % (activiteLib, equNom, equipTypeLib, name, noVoie, libelleVoie, commune, equGpsY, equGpsX,formule) = rep
+        % print(rep)
         <tr class="donnee">
           <td>{{activiteLib}}</td>
           <td>{{equNom}}</td>
@@ -34,6 +35,7 @@
           <td>{{name}}</td>
           <td>{{noVoie}}{{libelleVoie}}</td>
           <td>{{commune}}</td>
+          <td>{{formule}}</td>
           <div class="coordonnee">
             <td id="lat" data-latitude="{{equGpsY}}"> {{equGpsY}} </td>
             <td id="lng" data-longitude="{{equGpsX}}" > {{equGpsX}} </td>

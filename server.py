@@ -29,6 +29,7 @@ def home():
 def static(path):
     return static_file(path, root='views')
 
+
 """ Permet la liasion entre le modèle et la view pour l'autocomplétion par ville, renvoie sous format JSON """
 @route('/autocompletionville')
 def home() :
@@ -40,6 +41,7 @@ def home() :
         return template('error')
 
     return json.dumps(reponse)
+
 
 """ Permet la liasion entre le modèle et la view pour l'autocomplétion par activité, renvoie sous format JSON """
 @route('/autocompletionactivite')
@@ -57,9 +59,13 @@ def home() :
 @route('/villeActivite')
 def home() :
     activite = request.query.activite
-    ville = request.query.ville1
+    # ville = request.query.ville1
+    latitude = request.query.latitude
+    longitude = request.query.longitude
+    distance = request.query.slider
 
-    reponse = list(modele.rechercheVilleActivite(activite,ville))
+
+    reponse = list(modele.rechercheVilleActivite(activite,latitude,longitude,distance))
     if len(reponse) == 0:
         return template('error')
 
