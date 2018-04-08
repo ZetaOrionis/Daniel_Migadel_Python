@@ -59,12 +59,7 @@ function initialisationMap() {
   var lati = document.getElementById('lat');
   var lngi = document.getElementById('lng');
 
-
-
-
-
   var arraylist = document.getElementById('table').rows;
-
 
 
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -74,8 +69,29 @@ function initialisationMap() {
 
   var locations = [];
   for (var i = 0; i < arraylist.length-1; i++) {
-      locations.push({lat: parseFloat(lati.innerText), lng: parseFloat(lngi.innerText)});
+
   }
+
+  var coordonnees = document.querySelectorAll('[data-latitude],[data-longitude]');
+  console.log(coordonnees);
+  console.log(coordonnees.length);
+  console.log(coordonnees.item(0));
+  console.log(coordonnees.item(1));
+  for (var i = 0; i < coordonnees.length; ++i) {
+    console.log(coordonnees[i]);
+    if(i%2 == 0) {
+      var lat = coordonnees[i].innerHTML;
+      console.log("lat"+lat);
+
+    } else {
+      var lng = coordonnees[i].innerHTML;
+      console.log("lng"+lng);
+      locations.push({lat: parseFloat(lat), lng: parseFloat(lng)});
+      console.log(lat+" - "+lng);
+    }
+  }
+
+
 
   // Create an array of alphabetical characters used to label the markers.
   var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
