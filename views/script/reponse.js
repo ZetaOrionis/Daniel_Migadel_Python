@@ -47,9 +47,17 @@ function champsAbsent() {
 //Cette fonction permet de tri par ordre alphabétique le tableau en fonction de la première colonne
 function sortTable() {
     tbody = $('#table').find('tbody');
+    var i = 0;
+    $('td:last-child').each(function() {
+      var lng = $(this).eq(0).html();
+      var newlng = parseFloat(lng).toFixed(2);
+       $(this).eq(0).html(newlng);
+      i++;
+    });
     tbody.find('tr').sort(function(a, b) {
-      return $('td:first', a).text().localeCompare($('td:first', b).text());
+      return $('td:last-child', a).text().localeCompare($('td:last-child', b).text());
     }).appendTo(tbody);
+    
 }
 
 //Cette fonction permet d'afficher la map situé en bas de la page HTML, elle permet d'affiché tous les
@@ -73,21 +81,12 @@ function initialisationMap() {
   }
 
   var coordonnees = document.querySelectorAll('[data-latitude],[data-longitude]');
-  console.log(coordonnees);
-  console.log(coordonnees.length);
-  console.log(coordonnees.item(0));
-  console.log(coordonnees.item(1));
   for (var i = 0; i < coordonnees.length; ++i) {
-    console.log(coordonnees[i]);
     if(i%2 == 0) {
       var lat = coordonnees[i].innerHTML;
-      console.log("lat"+lat);
-
     } else {
       var lng = coordonnees[i].innerHTML;
-      console.log("lng"+lng);
       locations.push({lat: parseFloat(lat), lng: parseFloat(lng)});
-      console.log(lat+" - "+lng);
     }
   }
 
